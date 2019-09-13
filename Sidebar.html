@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <base target="_top">
+        <!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+
+        <?!= HtmlService.createHtmlOutputFromFile('Stylesheet2').getContent(); ?>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="block">
+            <img alt="Add-on logo" class="logo" width="35" src="https://gdurl.com/o1_G">
+            <h1>QA Helper</h1>
+            </div>
+            <hr>
+            <div class="block" id="newlocation">
+            <button type="button" class="btn btn-primary" id="create-new-location">Create New Location</button>
+            </div>
+            <div class="block">
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" id="location-name" placeholder="Location Name">
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" id="location-url" placeholder="Location URL">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Reference: http://getbootstrap.com/javascript/#tabs -->
+            <div role="tabpanel"> 
+                <ul class="nav .nav-fill nav-tabs justify-content-center" role="tablist">
+                    <li role="presentation" class="active"><a role="tab" data-toggle="tab" aria-controls="qc" href="#qc">QC</a>
+                    </li>
+                    <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="profile" href="#seo">SEO</a>
+                    </li>
+                    <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="messages" href="#wis">WIS</a>
+                    </li>
+                    <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="settings" href="#twis">TWIS</a>
+                    </li>
+                    <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="settings" href="#pm">PM</a>
+                    </li>
+                    <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="settings" href="#creative">Creative</a>
+                    </li>
+                    <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="settings" href="#am">AM</a>
+                    </li>
+                </ul>
+            
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="qc">
+                    <h2>QC Items</h2>
+                    <hr>
+                    <div class="block" id="add-qc-items">
+                        <button type="button" class="btn btn-secondary">Add Items To WF</button>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Issue # 1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Issue # 2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Issue # 3
+                        </label>
+                    </div>
+                    </div>  
+                    <div role="tabpanel" class="tab-pane" id="seo">
+                        <h2>SEO Items</h2>
+                        <hr>
+                        <div class="block" id="add-seo-items">
+                        <button type="button" class="btn btn-secondary">Add Items To WF</button>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 1
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 2
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 3
+                        </label>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="wis">
+                        <h2>WIS Items</h2>
+                        <hr>
+                        <div class="block" id="add-wis-items">
+                        <button type="button" class="btn btn-secondary">Add Items To WF</button>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 1
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 2
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 3
+                        </label>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="twis">
+                        <h2>TWIS Items</h2>
+                        <hr>
+                        <div class="block" id="add-twis-items">
+                        <button type="button" class="btn btn-secondary">Add Items To WF</button>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 1
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 2
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 3
+                        </label>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="pm">
+                        <h2>PM Items</h2>
+                        <hr>
+                        <div class="block" id="add-pm-items">
+                        <button type="button" class="btn btn-secondary">Add Items To WF</button>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 1
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 2
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 3
+                        </label>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="creative">
+                    <h2>Creative Items</h2>
+                    <hr>
+                    <div class="block" id="add-creative-items">
+                        <button type="button" class="btn btn-secondary">Add Items To WF</button>
+                    </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 1
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 2
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 3
+                        </label>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="am">
+                    <h2>AM Items</h2>
+                    <hr>
+                    <div class="block" id="add-am-items">
+                        <button type="button" class="btn btn-secondary">Add Items To WF</button>
+                    </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 1
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 2
+                        </label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Issue # 3
+                        </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+
+        
+        <!-- Footer -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
+    </body>
+</html>
