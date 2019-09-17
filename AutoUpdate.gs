@@ -8,8 +8,9 @@ function UpdateQATab() {
   this.activeCell = this.sheet.getActiveCell();
   this.activeCol = this.activeCell.getColumn();
   this.activeCellVal = this.activeCell.getValue();
-  this.needsUpdating = this.activeCol === 5 && this.sheetName === "QA Tab" || this.activeCol === 4 && this.sheetName === "Enhancement - QA" ? true : false;
+  this.needsUpdating = this.sheetName === "QA Tab" && this.activeCol === 5 || this.sheetName === "Enhancement - QA" && this.activeCol === 5 ? true : false;
   this.dontAddWhenBlank = ['2-Accepted','4-Contractor Validated','5-PM Validated','6-QA/QC Validated','7-SEO Validated','8-Duplicate Item','9-Ticket Open'];
+  this.offsetVal = -4;
   
   this.fillHistory = function() {
     var histCell = this.activeCell.offset(0, 10);
@@ -32,8 +33,7 @@ function UpdateQATab() {
   }
   
   this.fillFoundDate = function() {
-    var offsetVal = this.sheetName === "QA Tab" ? -4 : -3;
-    var dateCell = this.activeCell.offset(0, offsetVal);
+    var dateCell = this.activeCell.offset(0, this.offsetVal);
     if(dateCell.getValue() === '' && this.dontAddWhenBlank.indexOf(this.activeCellVal) === -1) {
         dateCell.setValue(this.day);
     }

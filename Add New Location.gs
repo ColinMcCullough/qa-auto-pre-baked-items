@@ -1,96 +1,70 @@
-function test() {
-  addLocation('Apartments','https://www.testapts.com')
+NewLocation.prototype = Object.create(QAHelper.prototype);
+NewLocation.prototype.constructor = NewLocation;
+
+function test2() {
+  addLocation('Apartments','www.apartments.com')
 }
 
 function addLocation(name,url) {
-  var locAdder = name && url ? new NewLocation(name,url) : new NewLocation();
+  var locAdder = new NewLocation(name,url)
   locAdder.setPreBakedValues();
 }
 
-function NewLocation(name,url) {
-  this.name = name
-  this.url = url
-  this.sheet = SpreadsheetApp.getActiveSheet();
-  this.lastCol = this.sheet.getLastColumn();
-  this.insertCol = 1;
-  this.insertRow = 3
-  this.email = Session.getActiveUser().getEmail();
-  this.userInfo = this.email.toString().replace("@getg5.com","");
-  this.activeRow = SpreadsheetApp.getActiveSpreadsheet().getActiveCell().getRow();
-  this.date = Utilities.formatDate(new Date(), "PST","MM/dd/yy");
-  this.historyCol = "Opened: " + this.date + " User: " + this.userInfo;
-  this.sheetName = this.sheet.getSheetName();
-  this.correctSheet = this.sheetName === "Enhancement - QA" || this.sheetName === "QA Tab" ? true : false;
-  this.ui = SpreadsheetApp.getUi();
 
+
+
+function NewLocation(name,url) {
+  QAHelper.call(this)
+  this.name = name;
+  this.url = url;
+  this.insertCol = 1;
+  this.insertRow = 3;
   
-  this.setPreBakedValues = function() {
-    
-    var proceed = this.sheetName === "Enhancement - QA" || this.sheetName === "QA Tab" && this.name && this.url ? true : false;
+  this.setPreBakedValues = function() { 
+    var proceed = this.correctSheet && this.name && this.url ? true : false;
     if(proceed) {
-      this.sheetName === "Enhancement - QA" ? this.createENHLoc() : this.createStandardLoc();
+      this.createStandardLoc();
     }
     else {
-      this.ui.alert('Please enter a location name and url')
+      this.ui.alert('Please enter a location name and url in the sidebar.\n\nMake sure you are on the QA Tab')
     }
-  }
-  
-  this.setDataVal = function() {
-    this.sheet.getRange(this.insertRow,1,1,this.lastCol).setBackground('white')
-    var buildPhaseDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Corporate','Initial Build (Phase1)','Remaining Build (Phase2+)','Add Location'], true).build();
-    var reviewStageDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Self QA','PM Review','Peer Review','SEO Staging Review','Staging QC','Live SEO Review','Live QC','Regression QC','Pre Live QC'], true).build();
-    var statusDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['0-Test Post Live','1-Open','2-Accepted','3-Fixed','4-Contractor Validated','5-PM Validated','6-QA/QC Validated','7-SEO Validated','8-Duplicate Item','9-Ticket Open'], true).build();
-    var passFailDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Pass','Fail'], true).build();
-    var typeDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Copy','Missing Content','404/Broken Page','ALT Text','CTN','Layout/UserExperience','Inquiry','CLS','Best Practices','SEO Strategy','Ticketed Item','Self QA'], true).build();
-    var responForDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['WIS','TWIS','WIS/PM','PM','PM/CLIENT','SEO','Account Manager','Creative'], true).build();
-    var fixedByDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['WIS','PM','SEO','QC','Creative'], true).build();
-    this.sheet.getRange(this.insertRow,2,1,2).setDataValidations([[buildPhaseDataVal,reviewStageDataVal]]);
-    this.sheet.getRange(this.insertRow,5,1,5).setDataValidations([[statusDataVal,passFailDataVal,typeDataVal,responForDataVal,fixedByDataVal]])
-    this.sheet.getRange(this.insertRow,1,1,this.lastCol).setFontColor('black').setFontWeight("normal").setFontSize(10);
-   }
-   
-   this.setEnhDataVal = function() {
-    this.sheet.getRange(this.insertRow,1,1,this.lastCol).setBackground('white')
-    var buildPhaseDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Corporate','Initial Build (Phase1)','Remaining Build (Phase2+)','Add Location'], true).build();
-    var reviewStageDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Self QA','PM Review','Peer Review','SEO Staging Review','Staging QC','Live SEO Review','Live QC','Regression QC','Pre Live QC'], true).build();
-    var statusDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['0-Test Post Live','1-Open','2-Accepted','3-Fixed','4-Contractor Validated','5-PM Validated','6-QA/QC Validated','7-SEO Validated','8-Duplicate Item','9-Ticket Open'], true).build();
-    var passFailDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Pass','Fail'], true).build();
-    var typeDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Copy','Missing Content','404/Broken Page','ALT Text','CTN','Layout/UserExperience','Inquiry','CLS','Best Practices','SEO Strategy','Ticketed Item','Self QA'], true).build();
-    var responForDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['WIS','TWIS','WIS/PM','PM','PM/CLIENT','SEO','Account Manager','Creative'], true).build();
-    var fixedByDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['WIS','PM','SEO','QC','Creative'], true).build();
-    this.sheet.getRange(this.insertRow,2,1,2).setDataValidations([[buildPhaseDataVal,reviewStageDataVal]]);
-    this.sheet.getRange(this.insertRow,5,1,5).setDataValidations([[statusDataVal,passFailDataVal,typeDataVal,responForDataVal,fixedByDataVal]])
-    this.sheet.getRange(this.insertRow,1,1,this.lastCol).setFontColor('black').setFontWeight("normal").setFontSize(10);
-   }
-  
-  this.createENHLoc = function(arr) {
-    this.sheet.insertRowBefore(this.insertRow);
-    this.formatRow();
-    this.sheet.insertRowsAfter(this.insertRow,5);           
-    this.sheet.getRange(this.insertRow,1,1,this.lastCol).setBackgroundRGB(233, 79, 61);
-    this.sheet.getRange(this.insertRow,1,1,this.lastCol).setDataValidation(null);
-    this.sheet.getRange(this.insertRow, this.insertCol).setValue(this.name).setFontColor('white').setFontWeight("bold");
-    this.sheet.getRange(this.insertRow, 1,1,14).setFontSize(16);
-    this.sheet.getRange(this.insertRow, 4).setHorizontalAlignment("right").setValue("Staging Link:").setFontColor('black').setFontWeight("bold");
-    this.sheet.getRange(this.insertRow, 5).setValue(this.url).setFontColor('white').setHorizontalAlignment("left").setWrapStrategy(SpreadsheetApp.WrapStrategy.OVERFLOW);
   }
   
   this.createStandardLoc = function() {
-    var prebakedArray = this.preBakedDoubleArray();
-    var setValuesRange = this.sheet.getRange(this.insertRow,1,8,15);
-    var redirectsRange = this.sheet.getRange(this.insertRow + 5,10);
-    var redirectsVal = SpreadsheetApp.newDataValidation().requireValueInList(["Please select Redirect Strategy from DropDown","No redirects","Redirects entered into CMS","Redirects entered into Redirect Manager","Support ticket submitted for Tyler's redirect tool","Transfer from single domain - support ticket to delete + redirect sites will need to be submitted at go-live","Redesign - any live pages not included in the redesign are entered into CMS for redirects"], true).build(); //redirects validation builder
     this.sheet.insertRowBefore(this.insertRow);
-    this.setDataVal();
+    this.setDataVal(this.insertRow);
     this.sheet.insertRowsAfter(this.insertRow,7);  
+    this.setHeaderFormatting();
+    if(this.sheetName === "QA Tab") {
+      this.setPreBakedData();
+    } else {
+      this.setEnhData();
+    }
+  }
+  
+  this.setHeaderFormatting = function() {
     this.sheet.getRange(this.insertRow,1,1,this.lastCol).setBackgroundRGB(233, 79, 61).setFontSize(16).setDataValidation(null);  
     this.sheet.getRange(this.insertRow, 1).setFontColor('white').setFontWeight("bold");
     this.sheet.getRange(this.insertRow, 5).setHorizontalAlignment("left").setFontColor('black').setFontWeight("bold");
     this.sheet.getRange(this.insertRow, 6).setFontColor('white').setWrapStrategy(SpreadsheetApp.WrapStrategy.OVERFLOW);
     this.sheet.getRange(this.insertRow, 13).setFontColor('white');
+  }
+  
+  this.setPreBakedData = function() {
+    var prebakedArray = this.preBakedDoubleArray();
+    var setValuesRange = this.sheet.getRange(this.insertRow,1,8,15);
+    var redirectsRange = this.sheet.getRange(this.insertRow + 5,10);
+    var redirectsVal = SpreadsheetApp.newDataValidation().requireValueInList(["Please select Redirect Strategy from DropDown","No redirects","Redirects entered into CMS","Redirects entered into Redirect Manager","Support ticket submitted for Tyler's redirect tool","Transfer from single domain - support ticket to delete + redirect sites will need to be submitted at go-live","Redesign - any live pages not included in the redesign are entered into CMS for redirects"], true).build(); //redirects validation builder
     setValuesRange.setValues(prebakedArray); // adds values
     redirectsRange.setDataValidation(redirectsVal);
-  }
+ }
+ 
+ this.setEnhData = function() {
+    var headerData = [[this.name,"","","","Staging Link:", this.url,"","","","","","",'=HYPERLINK("http://builder-handbook.g5static.com/self-qa","Self QA Checklist ↗")',"",""]];
+    var setValuesRange = this.sheet.getRange(this.insertRow,1,1,this.lastCol);
+    setValuesRange.setValues(headerData);
+ }
+
   
   this.preBakedDoubleArray = function() {
     var preBakedArr = [

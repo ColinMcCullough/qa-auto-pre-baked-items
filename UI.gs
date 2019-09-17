@@ -16,10 +16,13 @@ function qaSidebar() {
   SpreadsheetApp.getUi().showSidebar(ui);
 }
 
-
 function onEdit(e) {
-  var qaUpdater = new UpdateQATab();
-  if(qaUpdater.needsUpdating) {
-    qaUpdater.updateOnEdit()
+  var activeSheet = SpreadsheetApp.getActiveSheet().getSheetName()
+  if(activeSheet === "QA Tab" || activeSheet === "Enhancement - QA") {
+    var qaUpdater = new UpdateQATab();
+    if(qaUpdater.needsUpdating) {
+      qaUpdater.updateOnEdit()
+    }
   }
+  
 }
