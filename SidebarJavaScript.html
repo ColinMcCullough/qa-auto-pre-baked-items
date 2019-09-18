@@ -18,6 +18,7 @@
   
   function runAddQaItems() {
     var keys = [];
+    var stage = $( "#review-stage option:selected" ).text();
     var className = $('.tab-content').find('.active').attr('id');
     
     $('.' + className + '-items').children().find(':checkbox:checked').each(function() {
@@ -25,7 +26,8 @@
     });
     var tabInfo = {
       class : className,
-      checked : keys
+      checked : keys,
+      reviewstage : stage
     }
     
     google.script.run

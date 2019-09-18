@@ -1,7 +1,7 @@
 //Global Variables
 var ui = SpreadsheetApp.getUi();
 
-function onOpen() {
+function onOpen(e) {
   SpreadsheetApp.getUi()
       .createAddonMenu()
       .addItem('Open App', 'qaSidebar')
@@ -9,7 +9,7 @@ function onOpen() {
 }
 
 function qaSidebar() {
-  var SIDEBAR_TITLE = 'QA Helper';
+  var SIDEBAR_TITLE = 'QA Buddy';
   var ui = HtmlService.createTemplateFromFile('Sidebar')
       .evaluate()
       .setTitle(SIDEBAR_TITLE);
@@ -24,5 +24,8 @@ function onEdit(e) {
       qaUpdater.updateOnEdit()
     }
   }
-  
+}
+
+function onInstall(e) {
+  onOpen(e);
 }

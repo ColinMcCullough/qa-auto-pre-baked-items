@@ -29,7 +29,32 @@
                 <br />
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" id="location-url" placeholder="Location URL">
+                        <input type="text" class="form-control" id="location-url" placeholder="Location Staging Link">
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="get-uls">Generate URLs</button>
+                <div class="row">
+                    <div class="col" id="urls">
+                        <select class="custom-select custom-select-lg mb-3" id="select-page">
+                            <option selected>Select Page</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
+                        <select class="custom-select custom-select-lg mb-3" id="review-stage">
+                            <option selected>Select Review Stage</option>
+                            <option value="1">Self QA</option>
+                            <option value="2">PM Review</option>
+                            <option value="3">Peer Review</option>
+                            <option value="4">SEO Staging Review</option>
+                            <option value="5">Staging QC</option>
+                            <option value="6">Live SEO Review</option>
+                            <option value="7">Live QC</option>
+                            <option value="8">Regression QC</option>
+                            <option value="9">Pre Live QC</option>
+                        </select>
                     </div>
                 </div>
             </form>
