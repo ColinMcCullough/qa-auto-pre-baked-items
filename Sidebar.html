@@ -13,7 +13,6 @@
     <div class="container">
         <div class="block">
             <img alt="Add-on logo" class="logo" width="35" src="https://gdurl.com/o1_G">
-            <h1>QA Helper</h1>
         </div>
         <hr>
         <div class="block" id="newlocation">
@@ -26,21 +25,40 @@
                         <input type="text" class="form-control" id="location-name" placeholder="Location Name">
                     </div>
                 </div>
-                <br />
                 <div class="row">
-                    <div class="col">
+                    <div class="col-xs-8">
                         <input type="text" class="form-control" id="location-url" placeholder="Location Staging Link">
                     </div>
+                    <div class="col-xs-4 ">
+                        <div class="custom-control custom-switch checkboxes" id = "corp">
+                            <input type="checkbox" class="custom-control-input big-checkbox" id="corp-check">
+                            <label class="custom-control-label" id = "box-label" for="customSwitches">Corp?</label>
+                        </div>
+                    </div>
                 </div>
-                <button type="button" class="btn btn-primary" id="get-uls">Generate URLs</button>
                 <div class="row">
-                    <div class="col" id="urls">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" id="get-urls">Generate URLs</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8" id="urls">
                         <select class="custom-select custom-select-lg mb-3" id="select-page">
                             <option selected>Select Page</option>
                         </select>
                     </div>
+                    <div class="col-xs-4 ">
+                        <div class="custom-control custom-switch checkboxes" id = "oride">
+                            <input type="checkbox" class="custom-control-input big-checkbox" id="override-check">
+                            <label class="custom-control-label" id = "box-label" for="customSwitches">O-Ride</label>
+                        </div>
+                    </div>
                 </div>
-                <br />
+                <div class="row" style="display: none" id = "hidden-section">
+                    <div class="col">
+                        <input type="text" class="form-control" id="override-page" placeholder="Enter a page url here">
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col">
                         <select class="custom-select custom-select-lg mb-3" id="review-stage">
@@ -62,79 +80,97 @@
         <!-- Reference: http://getbootstrap.com/javascript/#tabs -->
         <div role="tabpanel">
             <ul class="nav .nav-fill nav-tabs justify-content-center" role="tablist">
-                <li role="presentation" class="active"><a role="tab" data-toggle="tab" aria-controls="qc"
-                        href="#qc">QC</a></li>
-                <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="seo" href="#seo">SEO</a></li>
-                <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="wis" href="#wis">WIS</a></li>
+                <li role="presentation" class="active"><a role="tab" data-toggle="tab" aria-controls="wis"href="#wis">WIS</a></li>
                 <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="twis" href="#twis">TWIS</a></li>
+                <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="wis" href="#qc">QC</a></li>
+                <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="seo" href="#seo">SEO</a></li>
                 <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="pm" href="#pm">PM</a></li>
-                <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="creative"
-                        href="#creative">Creative</a></li>
+                <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="creative" href="#creative">Creative</a></li>
                 <li role="presentation"><a role="tab" data-toggle="tab" aria-controls="am" href="#am">AM</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="qc">
-                    <h2>QC Items</h2>
-                    <hr>
-                    <div class="block" id="add-qc-items-btn">
-                        <button type="button" class="btn btn-secondary" id="add-qc-items">Add Items To WF</button>
-                    </div>
-                    <div class="qc-items">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkone">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 1</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 2</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 3</label>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="seo">
-                    <h2>SEO Items</h2>
-                    <hr>
-                    <div class="block" id="add-seo-items-btn">
-                        <button type="button" class="btn btn-secondary" id="add-seo-items">Add Items To WF</button>
-                    </div>
-                    <div class="seo-items">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkone">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 1</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 2</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 3</label>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="wis">
+                <div role="tabpanel" class="tab-pane active" id="wis">
                     <h2>WIS Items</h2>
                     <hr>
                     <div class="block" id="add-wis-items-btn">
                         <button type="button" class="btn btn-secondary" id="add-wis-items">Add Items To WF</button>
                     </div>
-                    <div class="wis-items">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkone">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 1</label>
+                    <div class="wis-items ">
+                        <div id = "best-practices">
+                            <button class="accordion" id="accordion-one">Best Practices</button>
+                            <div class="panel"> 
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="" id="check1">
+                                   <label class="form-check-label" for="defaultCheck1">Neighborhood Map Issue</label>
+                               </div>
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="" id="check2">
+                                   <label class="form-check-label" for="defaultCheck1">Slug Issue</label>
+                               </div>
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="" id="check3">
+                                   <label class="form-check-label" for="defaultCheck1">Page should be set to no-index</label>
+                               </div>
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="" id="check4">
+                                   <label class="form-check-label" for="defaultCheck1">Favicon Issue</label>
+                               </div>
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="" id="check5">
+                                   <label class="form-check-label" for="defaultCheck1">Incorrect photos used</label>
+                               </div> 
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 2</label>
+                        <div id = "copy">
+                            <button class="accordion" id="accordion-two">Copy</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check6">
+                                    <label class="form-check-label" for="defaultCheck1">Incorrect copy/content used</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check7">
+                                    <label class="form-check-label" for="defaultCheck1">Spelling Issue</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 3</label>
+                        <button class="accordion" id="accordion-three">CTN/Leads</button>
+                        <div class="panel">
+                            <div>
+                                <p>Ok</p>
+                            </div>
+                        </div>
+                        <button class="accordion" id="accordion-four">Integrations</button>
+                        <div class="panel">
+                            <div>
+                                <p>Ok</p>
+                            </div>
+                        </div>
+                        <button class="accordion" id="accordion-five">Internal Link</button>
+                        <div class="panel" id="panel1">
+                            <div>
+                                <p>Ok</p>
+                            </div>
+                        </div>
+                        <button class="accordion" id="accordion-six">Layout/UX</button>
+                        <div class="panel" id="panel1">
+                            <div>
+                                <p>Ok</p>
+                            </div>
+                        </div>
+                        <button class="accordion" id="accordion-seven">Missing Content</button>
+                        <div class="panel" id="panel1">
+                            <div>
+                                <p>Ok</p>
+                            </div>
+                        </div>
+                        <button class="accordion" id="accordion-eight">SEO Elements</button>
+                        <div class="panel" id="panel1">
+                            <div>
+                                <p>Ok</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,6 +195,49 @@
                         </div>
                     </div>
                 </div>
+                <div role="tabpanel" class="tab-pane" id="qc">
+                    <h2>QC Items</h2>
+                    <hr>
+                    <div class="block" id="add-qc-items-btn">
+                        <button type="button" class="btn btn-secondary" id="add-qc-items">Add Items To WF</button>
+                    </div>
+                    <div class="qc-items">   
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkone">
+                            <label class="form-check-label" for="defaultCheck1">404</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
+                            <label class="form-check-label" for="defaultCheck1">301</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
+                            <label class="form-check-label" for="defaultCheck1">Missing Alt Text</label>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="seo">
+                    <h2>SEO Items</h2>
+                    <hr>
+                    <div class="block" id="add-seo-items-btn">
+                        <button type="button" class="btn btn-secondary" id="add-seo-items">Add Items To WF</button>
+                    </div>
+                    <div class="seo-items">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkone">
+                            <label class="form-check-label" for="defaultCheck1">Issue # 1</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
+                            <label class="form-check-label" for="defaultCheck1">Issue # 2</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
+                            <label class="form-check-label" for="defaultCheck1">Issue # 3</label>
+                        </div>
+                    </div>
+                </div>
+                
                 <div role="tabpanel" class="tab-pane" id="pm">
                     <h2>PM Items</h2>
                     <hr>
@@ -224,6 +303,12 @@
                 </div>
             </div>
         </div>
+
+        
+        
+        <div id="sidebar-status"></div>
+
+
     </div>
     <div id="sidebar-status"></div>
     <!-- Footer -->
@@ -235,3 +320,5 @@
     <?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
 </body>
 </html>
+    
+

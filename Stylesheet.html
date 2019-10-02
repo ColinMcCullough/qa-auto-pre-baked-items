@@ -8,12 +8,57 @@ button.btn {
   color: white;
 }
 
-.btn-primary { 
-  background-color: #0b223f;
+p {
+  margin: 0px;
 }
 
+.btn-primary { 
+  background-color: #0b223f;
+  width: 100%;
+}
+
+#location-name,#override-page {
+  margin-bottom: 10px;
+}
+
+.form-check:nth-child(odd)  {
+    background-color: LightGray;
+    border-color: #0b223f;
+}
+.form-check:nth-child(even)  {
+    background-color: WhiteSmoke;
+    border-color: #0b223f;
+}
+.form-check {
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+
+.context {
+  margin-bottom: 5px;
+}
+
+h1 {
+  margin-top: 10px;
+  font-size: 30px
+}
+
+h2 {
+  margin-top: 10px;
+  font-size: 25px
+}
+
+
 .btn-secondary { 
-  background-color: #7896aa;
+  background-color: #e94f3d;
+  border-color: #e94f3d;
+  width: 100%;
+}
+
+.btn-secondary:hover { 
+  color: #FFFFFF;
+  width: 100%;
 }
 
 hr {
@@ -21,32 +66,66 @@ hr {
 }
 
 form {
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   margin-left: 15px;
   margin-right: 15px;
 }
 
-#newlocation,#add-qc-items-btn,#add-seo-items-btn,#add-wis-items-btn,#add-creative-items-btn,#add-pm-items-btn,#add-am-items-btn,#add-twis-items-btn {
+#newlocation,#add-qc-items-btn,#add-seo-items-btn,#add-wis-items-btn,#add-creative-items-btn,#add-pm-items-btn,#add-am-items-btn,#add-twis-items-btn, #genurls {
   text-align: center;
 }
+
+#add-wis-items {
+  margin-top: 0px;
+}
+
+#oride,#corp {
+  margin-top: 5px;
+}
+
+
+
+input[type=checkbox] {
+  vertical-align: middle;
+  margin: 0px;
+}
+
+label {
+  vertical-align: middle;
+  margin-bottom: 0px;
+  font-weight: normal;
+}
+
 
 #review-stage {
   width: 100%;
   padding: 6px 7px;
   border-radius: 4px;
 }
+.col-xs-8 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.col-xs-4 {
+  padding-right: 0px;
+}
+
+.big-checkbox {width: 15px; height: 15px;}
 
 #select-page {
   width: 100%;
   padding: 6px 7px;
   border-radius: 4px;
   text-align: left;
+  margin-bottom: 10px;
 }
 
-.btn-primary { 
-  background-color: #0b223f;
+#get-urls.btn-primary { 
+  background-color: #7896aa;
+  border-color: #7896aa; 
   text-align: center;
+  width: 100%;
 }
 
 
@@ -57,7 +136,42 @@ form {
   margin-right: auto;
   width: 20%;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
 }
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {  
+  font-weight: bold;
+  cursor: pointer;
+  height: 30px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  position: relative;
+  transition: 0.4s;
+
+  font-family: "Roboto";
+  padding: 5px, 5px;
+}
+
+#accordion-one,#accordion-two,#accordion-three,#accordion-four,#accordion-five,#accordion-six,#accordion-seven,#accordion-eight {
+  background: #0b223f;  
+  color: white;
+  font-size: 15px;
+  border-bottom: 1px solid white;
+  border-radius: 5px;
+}
+
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  display: none;
+  position: center;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0px;
+}
+
 
 </style>

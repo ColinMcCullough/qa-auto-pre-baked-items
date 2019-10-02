@@ -14,24 +14,145 @@
     $('#add-pm-items').click(runAddQaItems);
     $('#add-creative-items').click(runAddQaItems);
     $('#add-am-items').click(runAddQaItems);
+    $('#get-urls').click(getHtml);
+    //$('#get-urls').click(genUrls);
+    $('#override-check').change(hideAndUnhide);
+    $('.tab-content input[type=checkbox]').change(contextFields);
   });
   
+  function contextFields() {
+     var className = $('.tab-content').find('.active').attr('id');
+     hideContext(className);
+     addContext(className);
+  }
+  
+  function hideContext(tabName) {
+    $('.' + tabName + '-items').children().find(':checkbox:not(:checked)').each(function() {
+       var lastChild = $(this).parent().find('form')
+       if(lastChild) {
+         $(lastChild).remove()
+       } 
+     })
+  }
+     
+  function addContext(tabName) {
+    $('.' + tabName + '-items').children().find(':checkbox:checked').each(function() {
+       var lastChild = $(this).parent().find('form')
+       if(lastChild.length === 0) {
+         $(this).parent().append('<form><div class="row"><div class="col context"><input type="text" class="form-control" id="add-context" placeholder="Add Context"></div><div class="col"><input type="text" class="form-control" id="add-screenshot" placeholder="Add Screenshot"></div></div></form>')
+       }
+     })
+  }
+  
+  
+  function hideAndUnhide() {
+    if(this.checked === true){
+          $("#hidden-section").show();
+     }
+    else{
+        $("#hidden-section").hide()
+        $('#override-page').val('');
+    }
+  }
+  
+  function getHtml() {
+    this.disabled = true;
+    var locURL = $('#location-url').val().trim();
+    google.script.run
+     .withSuccessHandler(successHTMLGrab)
+     .withFailureHandler(failure)
+     .withUserObject(this)
+     .getHtmlString(locURL) //gets all html as string
+  }
+  
+  function successHTMLGrab(response, element) {
+    if(response) {
+      var html = $.parseHTML(response);
+      var navSecondLi = $(html).find('.location-nav').children()[1];
+      var internalLink = $(navSecondLi).find('a').attr('href');
+      var internalLinkPath = internalLink.slice(0,internalLink.lastIndexOf('/'));
+      genUrls(internalLinkPath,element);
+    }
+    else {
+      google.script.run
+     .withSuccessHandler(success)
+     .withFailureHandler(failure)
+     .withUserObject(this)
+     .errorAlert()
+    }
+  }
+
+  function genUrls(internalLinkPath) {
+    var locURL = $('#location-url').val().trim();
+    var isCorp = $('#corp-check').prop( "checked");
+    var childrenLen = $("#select-page").children().length;
+    //remove pages in ui when running
+    if(childrenLen > 1) {
+        for(var i = childrenLen; i > 1; i--) {
+          $("#select-page option:nth-child(" + i +")").remove();
+        }    
+    }
+    try{
+     var url = new URL(locURL);
+     var urlObj = {
+       url: locURL,
+       pathname : url.pathname,
+       hostname : url.hostname,
+       fullurl : url.href,
+       protocol : url.protocol,
+       corp : isCorp,
+       linkpath : internalLinkPath
+     }
+     google.script.run
+     .withSuccessHandler(genUrlsSuccess)
+     .withFailureHandler(failure)
+     .withUserObject(this)
+     .generateUrls(urlObj)
+    }
+    catch{
+     google.script.run
+     .withSuccessHandler(success)
+     .withFailureHandler(failure)
+     .withUserObject(this)
+     .errorAlert()
+    }
+  }
+  
+  function genUrlsSuccess(response, element) {
+    var keys = Object.keys(response).sort();
+    if(keys.length > 0) { //has urls to add
+      var parentList = $("#select-page");
+       for(var i = 0; i < keys.length; i++) {
+          parentList.append('<option id=' + '"' +keys[i]+ '"' +' > '+ response[keys[i]] + ' </option>');
+          parentList.children().first().attr("selected");
+          showStatus('No Errors.');
+        }   
+    }
+    $("#get-urls").attr("disabled", false);
+  }
+  
   function runAddQaItems() {
-    var keys = [];
+    var keys = {};
     var stage = $( "#review-stage option:selected" ).text();
     var className = $('.tab-content').find('.active').attr('id');
-    
+    var selectedPage = $('#override-check').prop( "checked") === false ? $( "#select-page option:selected" ).attr('id') : $('#override-page').val();
     $('.' + className + '-items').children().find(':checkbox:checked').each(function() {
-      keys.push($( this ).attr('id') );
+      keys[$( this ).attr('id')] = {
+        context : $( this ).siblings().find('#add-context').val(),
+        screenshot : $( this ).siblings().find('#add-screenshot').val(),
+        type : $( this ).parent().parent().siblings('button').text(),
+        issue : $( this ).siblings('label').text()
+        }
     });
     var tabInfo = {
       class : className,
       checked : keys,
-      reviewstage : stage
+      reviewstage : stage,
+      page : selectedPage
     }
     
     google.script.run
-        .withSuccessHandler(runGenNewLocSuccess)
+        .withSuccessHandler(runAddQaItemsSuccess)
         .withFailureHandler(failure)
         .withUserObject(this)
         .addQAItems(tabInfo)
@@ -48,17 +169,28 @@
         .addLocation(locName,locURL)
   }
   
-  function runGenNewLocSuccess(response, element) {
+  function runAddQaItemsSuccess(response, element) {
     showStatus('No Errors');
     element.disabled = false;
     if(response) {
+    /*
       var className = $('.tab-content').find('.active').attr('id');
-      console.log(className)
       $('.' + className + '-items').children().find(':checkbox:checked').each(function() {
         $( this ).prop( "checked", false );
       });
+      */
+      removeChecksAndContext();
     }    
   }
+  
+  function removeChecksAndContext() {
+    var className = $('.tab-content').find('.active').attr('id');
+    $('.' + className + '-items').children().find(':checkbox:checked').each(function() {
+        $( this ).prop( "checked", false );
+      });
+      hideContext(className);
+  }
+  
   
   // Respond to success conditions here.
   function success(msg, element) {
@@ -86,5 +218,29 @@
     }
   }
   
-    
+/*
+Open and close event for accordian
+*/
+var acc = document.getElementsByClassName("accordion");
+var i;
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+  /* Toggle between hiding and showing the active panel */
+  var panel = this.nextElementSibling;
+  if (panel.style.display === "block") {
+      panel.style.display = "none";
+      for(j = 0; j < acc.length; j++) {
+        acc[j].nextElementSibling.style.display = "none";
+      }              
+    } 
+    else {
+      for(j = 0; j < acc.length; j++) {
+        if(acc[j].nextElementSibling.style.display === "block") {
+          acc[j].nextElementSibling.style.display = "none";
+        }
+      panel.style.display = "block";  
+      } 
+    }
+  });
+}    
 </script>
