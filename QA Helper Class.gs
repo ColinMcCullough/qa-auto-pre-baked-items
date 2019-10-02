@@ -17,7 +17,7 @@ function QAHelper() {
     var reviewStageDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Self QA','PM Review','Peer Review','SEO Staging Review','Staging QC','Live SEO Review','Live QC','Regression QC','Pre Live QC'], true).build();
     var statusDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['0-Test Post Live','1-Open','2-Accepted','3-Fixed','4-Contractor Validated','5-PM Validated','6-QA/QC Validated','7-SEO Validated','8-Duplicate Item','9-Ticket Open'], true).build();
     var passFailDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Pass','Fail'], true).build();
-    var typeDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Copy','Integrations','Missing Content','Internal Link','ALT Text','CTN/Leads','Layout/UX,Inquiry','CLS','Best Practices','SEO Elements','Ticketed Item','Header Tags'], true).build();
+    var typeDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Copy','Integrations','Missing Content','Internal Link','ALT Text','CTN/Leads','Layout/UX','Inquiry','CLS','SEO Strategy','Best Practices','SEO Elements','Ticketed Item','Header Tags'], true).build();
     var responForDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['WIS','TWIS','WIS/PM','PM','PM/CLIENT','SEO','Account Manager','Creative','QC'], true).build();
     var fixedByDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['WIS','PM','SEO','QC','Creative'], true).build();
     this.sheet.getRange(insertRow,2,1,2).setDataValidations([[buildPhaseDataVal,reviewStageDataVal]]);
