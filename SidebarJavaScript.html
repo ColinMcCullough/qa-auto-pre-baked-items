@@ -6,6 +6,7 @@
    */
   $(function() {
     // Assign handler functions to sidebar elements here, if needed.
+    $('.search').on("keyup",filtertable);
     $('#create-new-location').click(runGenNewLoc);
     $('#add-qc-items').click(runAddQaItems);
     $('#add-seo-items').click(runAddQaItems);
@@ -19,6 +20,35 @@
     $('#override-check').change(hideAndUnhide);
     $('.tab-content input[type=checkbox]').change(contextFields);
   });
+  
+  function filtertable() {
+    var searchTerm = $(".search").val().toUpperCase(); // search term
+    var className = $('.tab-content').find('.active').attr('id'); //ex qc
+    var allAcordians =  $('.' + className + '-items').children()
+    
+    $(allAcordians).each(function() {
+        var currentAccordian = $(this)
+        $(this).find('.panel').each(function() {
+            //all labels under current accordion
+            var labels = $(this).find('label')
+            found = false
+            for(var i = 0;i < labels.length;i++) {
+                text = $(labels[i]).text().toUpperCase()
+                console.log(text)
+                if(text.indexOf(searchTerm) > -1) { //found text
+                    $(currentAccordian).show() //show accordian
+                    $(labels[i]).parent().show() //show line
+                    found = true
+    
+                }
+                else {
+                    $(labels[i]).parent().hide() //hide line
+                } 
+            }
+            if(!found) {$(currentAccordian).hide()}
+        })
+    })
+  }
   
   function contextFields() {
      var className = $('.tab-content').find('.active').attr('id');
