@@ -6,7 +6,8 @@
    */
   $(function() {
     // Assign handler functions to sidebar elements here, if needed.
-    $('.search').on("keyup",filtertable);
+    var tabName = $('.tab-content').find('.active').attr('id');
+    $('.' + tabName + '-items,.search').on("keyup",filtertable);
     $('#create-new-location').click(runGenNewLoc);
     $('#add-qc-items').click(runAddQaItems);
     $('#add-seo-items').click(runAddQaItems);
@@ -22,11 +23,12 @@
   });
   
   function filtertable() {
-    var searchTerm = $(".search").val().toUpperCase(); // search term
+    var searchTerm = $(this).val().toUpperCase(); // search term
     var className = $('.tab-content').find('.active').attr('id'); //ex qc
     var allAcordians =  $('.' + className + '-items').children()
     
     $(allAcordians).each(function() {
+        console.log('working')
         var currentAccordian = $(this)
         $(this).find('.panel').each(function() {
             //all labels under current accordion
@@ -34,7 +36,6 @@
             found = false
             for(var i = 0;i < labels.length;i++) {
                 text = $(labels[i]).text().toUpperCase()
-                console.log(text)
                 if(text.indexOf(searchTerm) > -1) { //found text
                     $(currentAccordian).show() //show accordian
                     $(labels[i]).parent().show() //show line
