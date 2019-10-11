@@ -1,240 +1,263 @@
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-  /**
-   * Run initializations on sidebar load.
-   */
-  $(function() {
-    // Assign handler functions to sidebar elements here, if needed.
-    var tabName = $('.tab-content').find('.active').attr('id');
-    $('.' + tabName + '-items,.search').on("keyup",filtertable);
-    $('#create-new-location').click(runGenNewLoc);
-    $('#add-qc-items').click(runAddQaItems);
-    $('#add-seo-items').click(runAddQaItems);
-    $('#add-wis-items').click(runAddQaItems);
-    $('#add-twis-items').click(runAddQaItems);
-    $('#add-pm-items').click(runAddQaItems);
-    $('#add-creative-items').click(runAddQaItems);
-    $('#add-am-items').click(runAddQaItems);
-    $('#get-urls').click(getHtml);
-    //$('#get-urls').click(genUrls);
-    $('#override-check').change(hideAndUnhide);
-    $('.tab-content input[type=checkbox]').change(contextFields);
-  });
-  
-  function filtertable() {
-    var searchTerm = $(this).val().toUpperCase(); // search term
-    var className = $('.tab-content').find('.active').attr('id'); //ex qc
-    var allAcordians =  $('.' + className + '-items').children()
-    
-    $(allAcordians).each(function() {
-        console.log('working')
-        var currentAccordian = $(this)
-        $(this).find('.panel').each(function() {
-            //all labels under current accordion
-            var labels = $(this).find('label')
-            found = false
-            for(var i = 0;i < labels.length;i++) {
-                text = $(labels[i]).text().toUpperCase()
-                if(text.indexOf(searchTerm) > -1) { //found text
-                    $(currentAccordian).show() //show accordian
-                    $(labels[i]).parent().show() //show line
-                    found = true
-    
-                }
-                else {
-                    $(labels[i]).parent().hide() //hide line
-                } 
-            }
-            if(!found) {$(currentAccordian).hide()}
-        })
-    })
-  }
-  
-  function contextFields() {
-     var className = $('.tab-content').find('.active').attr('id');
-     hideContext(className);
-     addContext(className);
-  }
-  
-  function hideContext(tabName) {
-    $('.' + tabName + '-items').children().find(':checkbox:not(:checked)').each(function() {
-       var lastChild = $(this).parent().find('form')
-       if(lastChild) {
-         $(lastChild).remove()
-       } 
-     })
-  }
-     
-  function addContext(tabName) {
-    $('.' + tabName + '-items').children().find(':checkbox:checked').each(function() {
-       var lastChild = $(this).parent().find('form')
-       if(lastChild.length === 0) {
-         $(this).parent().append('<form><div class="row"><div class="col context"><input type="text" class="form-control" id="add-context" placeholder="Add Context"></div><div class="col"><input type="text" class="form-control" id="add-screenshot" placeholder="Add Screenshot"></div></div></form>')
-       }
-     })
-  }
-  
-  
-  function hideAndUnhide() {
-    if(this.checked === true){
-          $("#hidden-section").show();
-     }
-    else{
-        $("#hidden-section").hide()
-        $('#override-page').val('');
-    }
-  }
-  
-  function getHtml() {
-    this.disabled = true;
-    var locURL = $('#location-url').val().trim();
-    google.script.run
-     .withSuccessHandler(successHTMLGrab)
-     .withFailureHandler(failure)
-     .withUserObject(this)
-     .getHtmlString(locURL) //gets all html as string
-  }
-  
-  function successHTMLGrab(response, element) {
-    if(response) {
-      var html = $.parseHTML(response);
-      var navSecondLi = $(html).find('.location-nav').children()[1];
-      var internalLink = $(navSecondLi).find('a').attr('href');
-      var internalLinkPath = internalLink.slice(0,internalLink.lastIndexOf('/'));
-      genUrls(internalLinkPath,element);
-    }
-    else {
-      google.script.run
-     .withSuccessHandler(success)
-     .withFailureHandler(failure)
-     .withUserObject(this)
-     .errorAlert()
-    }
-  }
-
-  function genUrls(internalLinkPath) {
-    var locURL = $('#location-url').val().trim();
-    var isCorp = $('#corp-check').prop( "checked");
-    var childrenLen = $("#select-page").children().length;
-    //remove pages in ui when running
-    if(childrenLen > 1) {
-        for(var i = childrenLen; i > 1; i--) {
-          $("#select-page option:nth-child(" + i +")").remove();
-        }    
-    }
-    try{
-     var url = new URL(locURL);
-     var urlObj = {
-       url: locURL,
-       pathname : url.pathname,
-       hostname : url.hostname,
-       fullurl : url.href,
-       protocol : url.protocol,
-       corp : isCorp,
-       linkpath : internalLinkPath
-     }
-     google.script.run
-     .withSuccessHandler(genUrlsSuccess)
-     .withFailureHandler(failure)
-     .withUserObject(this)
-     .generateUrls(urlObj)
-    }
-    catch{
-     google.script.run
-     .withSuccessHandler(success)
-     .withFailureHandler(failure)
-     .withUserObject(this)
-     .errorAlert()
-    }
-  }
-  
-  function genUrlsSuccess(response, element) {
-    var keys = Object.keys(response).sort();
-    if(keys.length > 0) { //has urls to add
-      var parentList = $("#select-page");
-       for(var i = 0; i < keys.length; i++) {
-          parentList.append('<option id=' + '"' +keys[i]+ '"' +' > '+ response[keys[i]] + ' </option>');
-          parentList.children().first().attr("selected");
-          showStatus('No Errors.');
-        }   
-    }
-    $("#get-urls").attr("disabled", false);
-  }
-  
-  function runAddQaItems() {
-    var keys = {};
-    var stage = $( "#review-stage option:selected" ).text();
-    var className = $('.tab-content').find('.active').attr('id');
-    var selectedPage = $('#override-check').prop( "checked") === false ? $( "#select-page option:selected" ).attr('id') : $('#override-page').val();
-    $('.' + className + '-items').children().find(':checkbox:checked').each(function() {
-      keys[$( this ).attr('id')] = {
-        context : $( this ).siblings().find('#add-context').val(),
-        screenshot : $( this ).siblings().find('#add-screenshot').val(),
-        type : $( this ).parent().parent().siblings('button').text(),
-        issue : $( this ).siblings('label').text()
-        }
+    /**
+     * Run initializations on sidebar load.
+     */
+    $(function () {
+        // Assign handler functions to sidebar elements here, if needed.
+        var tabName = $('.tab-content').find('.active').attr('id');
+        $('.' + tabName + '-items,.search').on("keyup", filtertable);
+        $('#create-new-location').click(runGenNewLoc);
+        $('#add-qc-items').click(runAddQaItems);
+        $('#add-seo-items').click(runAddQaItems);
+        $('#add-wis-items').click(runAddQaItems);
+        $('#add-twis-items').click(runAddQaItems);
+        $('#add-pm-items').click(runAddQaItems);
+        $('#add-creative-items').click(runAddQaItems);
+        $('#add-am-items').click(runAddQaItems);
+        $('#get-urls').click(getHtml);
+        $('#override-check').change(hideAndUnhide);
+        $('.tab-content input[type=checkbox]').change(contextFields);
     });
-    var tabInfo = {
-      class : className,
-      checked : keys,
-      reviewstage : stage,
-      page : selectedPage
+    
+    //filters table results of current tab as users type in search box
+    function filtertable() {
+        var searchTerm = $(this).val().toUpperCase(); // search term
+        var className = $('.tab-content').find('.active').attr('id'); //ex qc
+        var allAcordians = $('.' + className + '-items').children()
+        $(allAcordians).each(function () {
+            console.log('working')
+            var currentAccordian = $(this)
+            $(this).find('.panel').each(function () {
+                //all labels under current accordion
+                var labels = $(this).find('label')
+                found = false
+                for (var i = 0; i < labels.length; i++) {
+                    text = $(labels[i]).text().toUpperCase()
+                    if (text.indexOf(searchTerm) > -1) { //found text
+                        $(currentAccordian).show() //show accordian
+                        $(labels[i]).parent().show() //show line
+                        found = true
+
+                    }
+                    else {
+                        $(labels[i]).parent().hide() //hide line
+                    }
+                }
+                if (!found) { $(currentAccordian).hide() }
+            })
+        })
+    }
+    //runs when checkbox is clicked in panel.
+    //Opens Contect fields when checked, closes context fields when unchecked
+    function contextFields() {
+        var className = $('.tab-content').find('.active').attr('id');
+        hideContext(className);
+        addContext(className);
+    }
+    //Hides context field under checkbox when unchecked
+    function hideContext(tabName) {
+        $('.' + tabName + '-items').children().find(':checkbox:not(:checked)').each(function () {
+            var lastChild = $(this).parent().find('form')
+            if (lastChild) {
+                $(lastChild).remove()
+            }
+        })
+    }
+    //Opens Contect fields when checked
+    function addContext(tabName) {
+        $('.' + tabName + '-items').children().find(':checkbox:checked').each(function () {
+            var lastChild = $(this).parent().find('form')
+            if (lastChild.length === 0) {
+                $(this).parent().append('<form><div class="row"><div class="col context"><input type="text" class="form-control" id="add-context" placeholder="Add Context"></div><div class="col"><input type="text" class="form-control" id="add-screenshot" placeholder="Add Screenshot"></div></div></form>')
+            }
+        })
+    }
+
+    //opens override field for pages when box is o-ride checkbox is clicked
+    function hideAndUnhide() {
+        if (this.checked === true) {
+            $("#hidden-section").show();
+        }
+        else {
+            $("#hidden-section").hide()
+            $('#override-page').val('');
+        }
     }
     
-    google.script.run
-        .withSuccessHandler(runAddQaItemsSuccess)
-        .withFailureHandler(failure)
-        .withUserObject(this)
-        .addQAItems(tabInfo)
-  }
-  
-  
-  function runGenNewLoc() {
-    var locName = $('#location-name').val();
-    var locURL = $('#location-url').val();
-    google.script.run
-        .withSuccessHandler(success)
-        .withFailureHandler(failure)
-        .withUserObject(this)
-        .addLocation(locName,locURL)
-  }
-  
-  function runAddQaItemsSuccess(response, element) {
-    showStatus('No Errors');
-    element.disabled = false;
-    if(response) {
+    //gets all html as string when get urls is clicked
+    function getHtml() {
+        this.disabled = true;
+        var locURL = $('#location-url').val().trim();
+        google.script.run
+            .withSuccessHandler(successHTMLGrab)
+            .withFailureHandler(failure)
+            .withUserObject(this)
+            .getHtmlString(locURL) //gets all html as string
+    }
+    
     /*
-      var className = $('.tab-content').find('.active').attr('id');
-      $('.' + className + '-items').children().find(':checkbox:checked').each(function() {
-        $( this ).prop( "checked", false );
-      });
-      */
-      removeChecksAndContext();
-    }    
-  }
-  
-  function removeChecksAndContext() {
-    var className = $('.tab-content').find('.active').attr('id');
-    $('.' + className + '-items').children().find(':checkbox:checked').each(function() {
-        $( this ).prop( "checked", false );
-      });
-      hideContext(className);
-  }
-  
-  
-  // Respond to success conditions here.
-  function success(msg, element) {
-    showStatus('No Errors.');
-    element.disabled = false;
-  }
-  
-  // Respond to failure conditions here.
-  function failure(msg, element) {
-    showStatus(msg, 'error');
-    element.disabled = false;
-  }
-  
+      Success handler for getHtml
+      @param response holds string of html
+             response holds empty string if crawl issue
+    */
+    function successHTMLGrab(response, element) {
+        if (response) {
+            var html = $.parseHTML(response);
+            var navSecondLi = $(html).find('.location-nav').children()[1];
+            var internalLink = $(navSecondLi).find('a').attr('href');
+            var internalLinkPath = internalLink.slice(0, internalLink.lastIndexOf('/'));
+            genUrls(internalLinkPath, element);
+        }
+        else {
+            google.script.run
+                .withSuccessHandler(enableElement)
+                .withFailureHandler(failure)
+                .withUserObject(this)
+                .errorAlert()
+        }
+    }
+    
+    /*
+      Generates all urls/pages and sets as drop down list in ui
+      @param html in as JQuery Object
+    */
+    function genUrls(internalLinkPath) {
+        var locURL = $('#location-url').val().trim();
+        var isCorp = $('#corp-check').prop("checked");
+        var childrenLen = $("#select-page").children().length;
+        //remove pages in ui when running
+        if (childrenLen > 1) {
+            for (var i = childrenLen; i > 1; i--) {
+                $("#select-page option:nth-child(" + i + ")").remove();
+            }
+        }
+        try {
+            var url = new URL(locURL);
+            var urlObj = {
+                url: locURL,
+                pathname: url.pathname,
+                hostname: url.hostname,
+                fullurl: url.href,
+                protocol: url.protocol,
+                corp: isCorp,
+                linkpath: internalLinkPath
+            }
+            google.script.run
+                .withSuccessHandler(genUrlsSuccess)
+                .withFailureHandler(failure)
+                .withUserObject(this)
+                .generateUrls(urlObj)
+        }
+        catch{
+            google.script.run
+                .withSuccessHandler(enableElement)
+                .withFailureHandler(failure)
+                .withUserObject(this)
+                .errorAlert()
+        }
+    }
+    
+    /*
+      Success handler for genUrls function. Sets pages as list in ui
+      @param {Object} key,value --- key is urls, values are page names
+    */
+    function genUrlsSuccess(response, element) {
+        var keys = Object.keys(response).sort();
+        if (keys.length > 0) { //has urls to add
+            var parentList = $("#select-page");
+            for (var i = 0; i < keys.length; i++) {
+                parentList.append('<option id=' + '"' + keys[i] + '"' + ' > ' + response[keys[i]].toProperCase() + ' </option>');
+                parentList.children().first().attr("selected");
+                showStatus('No Errors.');
+            }
+        }
+        $("#get-urls").attr("disabled", false);
+    }
+
+    /*
+      `Adds items to spreadsheet for all boxes that are checked on current open panel in ui
+    */
+    function runAddQaItems() {
+        var keys = {};
+        var stage = $("#review-stage option:selected").text();
+        var className = $('.tab-content').find('.active').attr('id');
+        var selectedPage = $('#override-check').prop("checked") === false ? $("#select-page option:selected").attr('id') : $('#override-page').val();
+        $('.' + className + '-items').children().find(':checkbox:checked').each(function () {
+            keys[$(this).attr('id')] = {
+                context: $(this).siblings().find('#add-context').val(),
+                screenshot: $(this).siblings().find('#add-screenshot').val(),
+                type: $(this).parent().parent().siblings('button').text(),
+                issue: $(this).siblings('label').text()
+            }
+        });
+        var tabInfo = {
+            class: className,
+            checked: keys,
+            reviewstage: stage,
+            page: selectedPage
+        }
+
+        google.script.run
+            .withSuccessHandler(runAddQaItemsSuccess)
+            .withFailureHandler(failure)
+            .withUserObject(this)
+            .addQAItems(tabInfo)
+    }
+    
+    /*
+      Event handler for Add New Location button
+    */
+    function runGenNewLoc() {
+        var locName = $('#location-name').val();
+        var locURL = $('#location-url').val();
+        google.script.run
+            .withSuccessHandler(success)
+            .withFailureHandler(failure)
+            .withUserObject(this)
+            .addLocation(locName, locURL)
+    }
+    
+    /*
+      Success handler for Add QA Items function
+      @param {String} - If successsful returns string 'success' and unchecks items added
+                      - If errors, returns null and we do not uncheck items
+    */
+    function runAddQaItemsSuccess(response, element) {
+        showStatus('No Errors');
+        element.disabled = false;
+        if (response) {
+            removeChecksAndContext();
+        }
+    }
+    //Removes checks for all items in current tab pane and hides context rows
+    function removeChecksAndContext() {
+        var className = $('.tab-content').find('.active').attr('id');
+        $('.' + className + '-items').children().find(':checkbox:checked').each(function () {
+            $(this).prop("checked", false);
+        });
+        hideContext(className);
+    }
+
+
+    // Respond to success conditions here.
+    function success(msg, element) {
+        showStatus('Success');
+        element.disabled = false;
+    }
+    
+    //Enables get urls button
+    function enableElement() {
+        $("#get-urls").attr("disabled", false);
+    }
+
+
+    // Respond to failure conditions here.
+    function failure(msg, element) {
+        showStatus(msg, 'error');
+        element.disabled = false;
+    }
+
     /**
    * Displays the given status message in the sidebar.
    *
@@ -242,36 +265,44 @@
    * @param {String} classId The message type (class id) that the message
    *   should be displayed as.
    */
-  function showStatus(msg, classId) {
-    $('#sidebar-status').removeClass().html(msg);
-    if (classId) {
-      $('#sidebar-status').addClass(classId);
-    }
-  }
-  
-/*
-Open and close event for accordian
-*/
-var acc = document.getElementsByClassName("accordion");
-var i;
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-  /* Toggle between hiding and showing the active panel */
-  var panel = this.nextElementSibling;
-  if (panel.style.display === "block") {
-      panel.style.display = "none";
-      for(j = 0; j < acc.length; j++) {
-        acc[j].nextElementSibling.style.display = "none";
-      }              
-    } 
-    else {
-      for(j = 0; j < acc.length; j++) {
-        if(acc[j].nextElementSibling.style.display === "block") {
-          acc[j].nextElementSibling.style.display = "none";
+    function showStatus(msg, classId) {
+        $('#sidebar-status').removeClass().html(msg);
+        if (classId) {
+            $('#sidebar-status').addClass(classId);
         }
-      panel.style.display = "block";  
-      } 
     }
-  });
-}    
+
+    /** 
+    * Prototype function for the String class that turns a string into proper case
+    * @return {String} in proper case
+    */
+    String.prototype.toProperCase = function () {
+        return this.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
+    }
+
+    /*
+    Open and close event for accordian
+    */
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            /* Toggle between hiding and showing the active panel */
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+                for (j = 0; j < acc.length; j++) {
+                    acc[j].nextElementSibling.style.display = "none";
+                }
+            }
+            else {
+                for (j = 0; j < acc.length; j++) {
+                    if (acc[j].nextElementSibling.style.display === "block") {
+                        acc[j].nextElementSibling.style.display = "none";
+                    }
+                    panel.style.display = "block";
+                }
+            }
+        });
+    }    
 </script>

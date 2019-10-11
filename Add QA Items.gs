@@ -7,14 +7,21 @@ function testaddqa() {
   var response = inserQAItems.run()
   return response;
 }
-
+/*Adds Items from the UI to the QA tab sheet
+  @param {Object} - tab info
+  @return null is fails, {String} - 'Success' is successfully added issues
+*/
 function addQAItems(tabInfo) {
-  Logger.log(tabInfo)
   var inserQAItems = new InsertQATasks(tabInfo);
   var response = inserQAItems.run()
   return response;
 }
 
+/*
+  This class takes data filled out in the sidebar by the client and processes it for insertion into the QA tab
+  @param {Object} - tab info
+    @properties checked:{check1:{issue:{String}, context:{String}, screenshot:{String}, type:{String}}}, page:{String}, class:{String}, reviewstage:{String}}
+*/
 function InsertQATasks(tabInfo) {
   QAHelper.call(this)
   this.tabInfo = tabInfo;
@@ -27,7 +34,7 @@ function InsertQATasks(tabInfo) {
   //main run function
   this.run = function() {
     var errors = this.checkErrors();
-    if(errors.length <= 1) {
+    if(!errors) {
       var openItems = this.getOpenItems();
       this.sheet.insertRowAfter(this.activeRow)
       this.setDataVal(this.activeRow + 1)
@@ -48,10 +55,11 @@ function InsertQATasks(tabInfo) {
     var errors = ['Errors:']
     this.activeRow < 3 ? errors.push('*Select the row where you would like issues places. Can not be in header') : '';
     !(this.correctSheet) ? errors.push('*Make sure you are on the QA tab') : '';
+    !(this.correctHeaders()) ? errors.push('*Incorrect headers. Make sure this is the most current QA Template') : '';
     this.checked.length === 0 ? errors.push('*No items selected from checkboxes') : '';
     this.stage === 'Select Review Stage' ? errors.push('*Select what review stage you are on') : '';
     this.page === 'Select Page' ? errors.push('*Select a page') : '';
-    return errors;
+    return errors.length > 1 ? errors : null;
   }
   
   //gets a 2d array of all issues with checkmarks in UI
@@ -66,11 +74,12 @@ function InsertQATasks(tabInfo) {
   
   //generates a dynamic row to insert based on run time data
   this.generateRow = function(key) {
+    var status = this.tabInfo.checked[key].issue === 'Review Complete' ? '3-Fixed' : '1-Open';
     return [this.day,
             "",
             this.stage,
             this.page,
-            "1-Open",
+            status,
             "",
             this.tabInfo.checked[key].type,
             this.checkedTab.toUpperCase(),
@@ -80,7 +89,7 @@ function InsertQATasks(tabInfo) {
             this.userInfo,
             "",
             "",
-            this.historyCol];
+            status.substring(2) + ":" + this.date + " User: " + this.userInfo];
   }
   
   

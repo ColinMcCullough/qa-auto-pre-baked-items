@@ -15,11 +15,31 @@ p {
   padding: 5px 10px;
 }
 
+.form-check.row {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.row input[type=checkbox] {
+  margin-top: 4px;
+}
 .btn-primary { 
   background-color: #0b223f;
   width: 100%;
 }
 
+.form-group {
+  margin-bottom: 10px;
+}
+
+.col-xs-1 {
+  width: 13px;
+  text-align: left;
+}
+label.form-check-label.col-xs-11 {
+  padding: 0px;
+  padding-left: 5px;
+}
 #location-name,#override-page {
   margin-bottom: 10px;
 }
@@ -67,19 +87,32 @@ h2 {
 hr {
   margin: 10px 0px;
 }
+#top-form-area {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+#create-new-location {
+    margin-top: 0px;
+}
 
 form {
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-left: 15px;
   margin-right: 15px;
 }
 
-#newlocation,#add-qc-items-btn,#add-seo-items-btn,#add-wis-items-btn,#add-creative-items-btn,#add-pm-items-btn,#add-am-items-btn,#add-twis-items-btn, #genurls {
+#newlocation,#add-qc-items-btn,
+#add-seo-items-btn,#add-wis-items-btn,
+#add-creative-items-btn,#add-pm-items-btn,
+#add-am-items-btn,#add-twis-items-btn, #genurls {
   text-align: center;
 }
 
-#add-wis-items {
+#add-qc-items,
+#add-seo-items,#add-wis-items,
+#add-creative-items,#add-pm-items,
+#add-am-items,#add-twis-items {
   margin-top: 0px;
 }
 
@@ -153,12 +186,11 @@ label {
   outline: none;
   position: relative;
   transition: 0.4s;
-
   font-family: "Roboto";
   padding: 5px, 5px;
 }
 
-#accordion-one,#accordion-two,#accordion-three,#accordion-four,#accordion-five,#accordion-six,#accordion-seven,#accordion-eight {
+.accordion {
   background: #0b223f;  
   color: white;
   font-size: 15px;

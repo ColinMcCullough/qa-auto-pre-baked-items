@@ -19,7 +19,7 @@
             <button type="button" class="btn btn-primary" id="create-new-location">Create New Location</button>
         </div>
         <div class="block">
-            <form>
+            <form id="top-form-area">
                 <div class="row">
                     <div class="col">
                         <input type="text" class="form-control" id="location-name" placeholder="Location Name">
@@ -30,9 +30,9 @@
                         <input type="text" class="form-control" id="location-url" placeholder="Location Staging Link">
                     </div>
                     <div class="col-xs-4 ">
-                        <div class="custom-control custom-switch checkboxes" id = "corp">
+                        <div class="custom-control custom-switch checkboxes" id="corp">
                             <input type="checkbox" class="custom-control-input big-checkbox" id="corp-check">
-                            <label class="custom-control-label" id = "box-label" for="customSwitches">Corp?</label>
+                            <label class="custom-control-label" id="box-label" for="customSwitches">Corp?</label>
                         </div>
                     </div>
                 </div>
@@ -48,13 +48,13 @@
                         </select>
                     </div>
                     <div class="col-xs-4 ">
-                        <div class="custom-control custom-switch checkboxes" id = "oride">
+                        <div class="custom-control custom-switch checkboxes" id="oride">
                             <input type="checkbox" class="custom-control-input big-checkbox" id="override-check">
-                            <label class="custom-control-label" id = "box-label" for="customSwitches">O-Ride</label>
+                            <label class="custom-control-label" id="box-label" for="customSwitches">O-Ride</label>
                         </div>
                     </div>
                 </div>
-                <div class="row" style="display: none" id = "hidden-section">
+                <div class="row" style="display: none" id="hidden-section">
                     <div class="col">
                         <input type="text" class="form-control" id="override-page" placeholder="Enter a page url here">
                     </div>
@@ -101,171 +101,185 @@
                         <input type="text" class="search form-control" placeholder="Search issues">
                     </div>
                     <div class="wis-items ">
-                        <div id = "best-practices">
+                        <div id="best-practices">
                             <button class="accordion" id="accordion-one">Best Practices</button>
-                            <div class="panel"> 
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check1">
-                                   <label class="form-check-label" for="defaultCheck1">Neighborhood Map Issue</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check2">
-                                   <label class="form-check-label" for="defaultCheck1">Slug Issue</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check3">
-                                   <label class="form-check-label" for="defaultCheck1">Page should be set to no-index</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check4">
-                                   <label class="form-check-label" for="defaultCheck1">Favicon Issue</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check5">
-                                   <label class="form-check-label" for="defaultCheck1">Incorrect photos used</label>
-                               </div> 
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                                    <label class="form-check-label" for="defaultCheck1">Neighborhood Map Issue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check2">
+                                    <label class="form-check-label" for="defaultCheck1">Slug Issue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check3">
+                                    <label class="form-check-label" for="defaultCheck1">Page should be set to no-index</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check4">
+                                    <label class="form-check-label" for="defaultCheck1">Favicon Issue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check5">
+                                    <label class="form-check-label" for="defaultCheck1">Incorrect photos used</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check6">
+                                    <label class="form-check-label" for="defaultCheck1">Review Complete</label>
+                                </div>
                             </div>
                         </div>
-                        <div id = "copy">
+                        <div id="copy">
                             <button class="accordion" id="accordion-two">Copy</button>
                             <div class="panel">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check6">
+                                    <input class="form-check-input" type="checkbox" value="" id="check7">
                                     <label class="form-check-label" for="defaultCheck1">Incorrect copy/content used</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check7">
+                                    <input class="form-check-input" type="checkbox" value="" id="check8">
                                     <label class="form-check-label" for="defaultCheck1">Spelling Issue</label>
                                 </div>
                             </div>
                         </div>
-                        <div id = "ctn-leads">
+                        <div id="ctn-leads">
                             <button class="accordion" id="accordion-three">CTN/Leads</button>
                             <div class="panel">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check8">
+                                    <input class="form-check-input" type="checkbox" value="" id="check9">
                                     <label class="form-check-label" for="defaultCheck1">Integrated Leads issue</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check9">
+                                    <input class="form-check-input" type="checkbox" value="" id="check10">
                                     <label class="form-check-label" for="defaultCheck1">Needs override set up in g5-emails</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check10">
+                                    <input class="form-check-input" type="checkbox" value="" id="check11">
                                     <label class="form-check-label" for="defaultCheck1">Incorrect forms being used</label>
                                 </div>
                             </div>
                         </div>
-                        <div id = "integrations">
+                        <div id="integrations">
                             <button class="accordion" id="accordion-four">Integrations</button>
                             <div class="panel">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check11">
+                                    <input class="form-check-input" type="checkbox" value="" id="check12">
                                     <label class="form-check-label" for="defaultCheck1">Integration issue</label>
                                 </div>
                             </div>
                         </div>
-                        <div id = "internal-links">
+                        <div id="internal-links">
                             <button class="accordion" id="accordion-five">Internal Link</button>
                             <div class="panel" id="panel1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check12">
+                                    <input class="form-check-input" type="checkbox" value="" id="check13">
                                     <label class="form-check-label" for="defaultCheck1">301 on page</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check13">
+                                    <input class="form-check-input" type="checkbox" value="" id="check14">
                                     <label class="form-check-label" for="defaultCheck1">404 on page</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check14">
+                                    <input class="form-check-input" type="checkbox" value="" id="check15">
                                     <label class="form-check-label" for="defaultCheck1">CTA not linked</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check15">
+                                    <input class="form-check-input" type="checkbox" value="" id="check16">
                                     <label class="form-check-label" for="defaultCheck1">Page missing internal links</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check16">
+                                    <input class="form-check-input" type="checkbox" value="" id="check17">
                                     <label class="form-check-label" for="defaultCheck1">Disabled page with internal links</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check17">
+                                    <input class="form-check-input" type="checkbox" value="" id="check18">
                                     <label class="form-check-label" for="defaultCheck1">Enabled Page missing links</label>
                                 </div>
                             </div>
                         </div>
-                        <div id = "layout-ux">
+                        <div id="layout-ux">
                             <button class="accordion" id="accordion-six">Layout/UX</button>
                             <div class="panel" id="panel1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check18">
+                                    <input class="form-check-input" type="checkbox" value="" id="check19">
                                     <label class="form-check-label" for="defaultCheck1">Widget not functioning correctly</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check19">
+                                    <input class="form-check-input" type="checkbox" value="" id="check20">
                                     <label class="form-check-label" for="defaultCheck1">Office hours don't match WB</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check20">
+                                    <input class="form-check-input" type="checkbox" value="" id="check21">
                                     <label class="form-check-label" for="defaultCheck1">Poor hyperlink color</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check21">
+                                    <input class="form-check-input" type="checkbox" value="" id="check22">
                                     <label class="form-check-label" for="defaultCheck1">Mobile Issue</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check22">
+                                    <input class="form-check-input" type="checkbox" value="" id="check23">
                                     <label class="form-check-label" for="defaultCheck1">Layout doesn't follow best practices</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check23">
+                                    <input class="form-check-input" type="checkbox" value="" id="check24">
                                     <label class="form-check-label" for="defaultCheck1">Location not in corp search widget</label>
                                 </div>
                             </div>
                         </div>
-                        <div id = "missing-content">
+                        <div id="missing-content">
                             <button class="accordion" id="accordion-seven">Missing Content</button>
                             <div class="panel" id="panel1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check24">
+                                    <input class="form-check-input" type="checkbox" value="" id="check25">
                                     <label class="form-check-label" for="defaultCheck1">UID / URN missing in Client Center</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check25">
+                                    <input class="form-check-input" type="checkbox" value="" id="check26">
                                     <label class="form-check-label" for="defaultCheck1">Incorrect Values in Client Hub Fields</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check26">
+                                    <input class="form-check-input" type="checkbox" value="" id="check27">
                                     <label class="form-check-label" for="defaultCheck1">Missing thumbnail in client hub</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check27">
+                                    <input class="form-check-input" type="checkbox" value="" id="check28">
                                     <label class="form-check-label" for="defaultCheck1">Social links need adding</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check28">
+                                    <input class="form-check-input" type="checkbox" value="" id="check29">
                                     <label class="form-check-label" for="defaultCheck1">Incorrect address used</label>
                                 </div>
                             </div>
                         </div>
-                        <div id = "seo-elements">
-                        <button class="accordion" id="accordion-eight">SEO Elements</button>
+                        <div id="seo-elements">
+                            <button class="accordion" id="accordion-eight">SEO Elements</button>
                             <div class="panel" id="panel1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check25">
+                                    <input class="form-check-input" type="checkbox" value="" id="check30">
                                     <label class="form-check-label" for="defaultCheck1">Missing alt text on page</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check26">
-                                    <label class="form-check-label" for="defaultCheck1">Incorrect SEO Strategy Used</label>
+                                    <input class="form-check-input" type="checkbox" value="" id="check31">
+                                    <label class="form-check-label" for="defaultCheck1">Incorrect SEO Strategy
+                                        Used</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check27">
+                                    <input class="form-check-input" type="checkbox" value="" id="check32">
                                     <label class="form-check-label" for="defaultCheck1">Multiple H1's</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check28">
+                                    <input class="form-check-input" type="checkbox" value="" id="check33">
                                     <label class="form-check-label" for="defaultCheck1">Missing H1's</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="inquiry">
+                            <button class="accordion" id="accordion-nine">Inquiry</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check34">
+                                    <label class="form-check-label" for="defaultCheck1">WIS Inquiry / Question</label>
                                 </div>
                             </div>
                         </div>
@@ -281,17 +295,62 @@
                         <input type="text" class="search form-control" placeholder="Search issues">
                     </div>
                     <div class="twis-items">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkone">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 1</label>
+                        <div id="best-practices">
+                            <button class="accordion" id="accordion-one">Best Practices</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                                    <label class="form-check-label" for="defaultCheck1">Review Complete</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 2</label>
+                        <div id="ctn-leads">
+                            <button class="accordion" id="accordion-three">CTN/Leads</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check2">
+                                    <label class="form-check-label" for="defaultCheck1">Integrated Leads issue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check3">
+                                    <label class="form-check-label" for="defaultCheck1">Needs override set up in g5-emails</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check4">
+                                    <label class="form-check-label" for="defaultCheck1">Incorrect forms being used</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 3</label>
+                        <div id="integrations">
+                            <button class="accordion" id="accordion-four">Integrations</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check5">
+                                    <label class="form-check-label" for="defaultCheck1">Integration issue</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="redirects">
+                            <button class="accordion" id="accordion-four">Redirects</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check6">
+                                    <label class="form-check-label" for="defaultCheck1">Missing Redirects</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check7">
+                                    <label class="form-check-label" for="defaultCheck1">Incorrect Redirects</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="inquiry">
+                            <button class="accordion" id="accordion-nine">Inquiry</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check8">
+                                    <label class="form-check-label" for="defaultCheck1">TWIS Inquiry / Question</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -304,18 +363,24 @@
                     <div class="form-group">
                         <input type="text" class="search form-control" placeholder="Search issues">
                     </div>
-                    <div class="qc-items">   
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkone">
-                            <label class="form-check-label" for="defaultCheck1">404</label>
+                    <div class="qc-items">
+                        <div id="best-practices">
+                            <button class="accordion" id="accordion-one">Best Practices</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                                    <label class="form-check-label" for="defaultCheck1">Review Complete</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
-                            <label class="form-check-label" for="defaultCheck1">301</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
-                            <label class="form-check-label" for="defaultCheck1">Missing Alt Text</label>
+                        <div id="inquiry">
+                            <button class="accordion" id="accordion-nine">Inquiry</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check2">
+                                    <label class="form-check-label" for="defaultCheck1">QC Inquiry / Question</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -329,72 +394,87 @@
                         <input type="text" class="search form-control" placeholder="Search issues">
                     </div>
                     <div class="seo-items ">
-                        <div id = "internal-links">
+                        <div id="best-practices">
+                            <button class="accordion" id="accordion-two">Best Practices</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                                    <label class="form-check-label" for="defaultCheck1">Google My Business issue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check2">
+                                    <label class="form-check-label" for="defaultCheck1">Title Tag issue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check3">
+                                    <label class="form-check-label" for="defaultCheck1">Meta Description issue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check4">
+                                    <label class="form-check-label" for="defaultCheck1">Alt Text issue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check5">
+                                    <label class="form-check-label" for="defaultCheck1">Review Complete</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="internal-links">
                             <button class="accordion" id="accordion-one">Internal Link</button>
-                            <div class="panel"> 
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check1">
-                                   <label class="form-check-label" for="defaultCheck1">Poor anchor text used</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check2">
-                                   <label class="form-check-label" for="defaultCheck1">Anchor text to long</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check3">
-                                   <label class="form-check-label" for="defaultCheck1">Anchor text to close together</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check4">
-                                   <label class="form-check-label" for="defaultCheck1">Anchor text linked to wrong page</label>
-                               </div>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check6">
+                                    <label class="form-check-label" for="defaultCheck1">Poor anchor text used</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check7">
+                                    <label class="form-check-label" for="defaultCheck1">Anchor text to long</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check8">
+                                    <label class="form-check-label" for="defaultCheck1">Anchor text to close
+                                        together</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check9">
+                                    <label class="form-check-label" for="defaultCheck1">Anchor text linked to wrong
+                                        page</label>
+                                </div>
                             </div>
                         </div>
-                        <div id = "best-practices">
-                            <button class="accordion" id="accordion-one">Best Practices</button>
-                            <div class="panel"> 
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check1">
-                                   <label class="form-check-label" for="defaultCheck1">Google My Business issue</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check2">
-                                   <label class="form-check-label" for="defaultCheck1">Title Tag issue</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check3">
-                                   <label class="form-check-label" for="defaultCheck1">Meta Description issue</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check4">
-                                   <label class="form-check-label" for="defaultCheck1">Alt Text issue</label>
-                               </div>
+                        <div id="missing-content">
+                            <button class="accordion" id="accordion-three">Missing Content</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check10">
+                                    <label class="form-check-label" for="defaultCheck1">Missing GA Code</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check11">
+                                    <label class="form-check-label" for="defaultCheck1">Hub listing field issue</label>
+                                </div>
                             </div>
                         </div>
-                        <div id = "missing-content">
-                            <button class="accordion" id="accordion-one">Missing Content</button>
-                            <div class="panel"> 
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check1">
-                                   <label class="form-check-label" for="defaultCheck1">Missing GA Code</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check2">
-                                   <label class="form-check-label" for="defaultCheck1">Hub listing field issue</label>
-                               </div>
+                        <div id="redirects">
+                            <button class="accordion" id="accordion-four">Redirects</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check12">
+                                    <label class="form-check-label" for="defaultCheck1">Missing Redirects</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check13">
+                                    <label class="form-check-label" for="defaultCheck1">Incorrect Redirects</label>
+                                </div>
                             </div>
                         </div>
-                        <div id = "redirects">
-                            <button class="accordion" id="accordion-one">Redirects</button>
-                            <div class="panel"> 
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check1">
-                                   <label class="form-check-label" for="defaultCheck1">Missing Redirects</label>
-                               </div>
-                               <div class="form-check">
-                                   <input class="form-check-input" type="checkbox" value="" id="check2">
-                                   <label class="form-check-label" for="defaultCheck1">Incorrect Redirects</label>
-                               </div>
+                        <div id="inquiry">
+                            <button class="accordion" id="accordion-five">Inquiry</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check14">
+                                    <label class="form-check-label" for="defaultCheck1">SEO Inquiry / Question</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -409,17 +489,90 @@
                         <input type="text" class="search form-control" placeholder="Search issues">
                     </div>
                     <div class="pm-items">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkone">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 1</label>
+                        <div id="best-practices">
+                            <button class="accordion" id="accordion-one">Best Practices</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                                    <label class="form-check-label" for="defaultCheck1">Email lead bouncing/dropping</label>
+                                </div>
+                                <div class="form-check row">
+                                    <input class="form-check-input col-xs-1" type="checkbox" value="" id="check2">
+                                    <label class="form-check-label col-xs-11" for="defaultCheck1">Client on integrated leads. Disable location email to prevent duplicate guest cards in CRM</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check3">
+                                    <label class="form-check-label" for="defaultCheck1">Review Complete</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 2</label>
+                        <div id="ctn-leads">
+                            <button class="accordion" id="accordion-five">CTN/Leads</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check4">
+                                    <label class="form-check-label" for="defaultCheck1">Forward number not working</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 3</label>
+                        <div id="inquiry">
+                            <button class="accordion" id="accordion-five">Inquiry</button>
+                            <div class="panel">
+                                <div class="form-check row">
+                                    <input class="form-check-input col-xs-1" type="checkbox" value="" id="check5">
+                                    <label class="form-check-label col-xs-11" for="defaultCheck1">Duplicate website found, request client take down and redirect</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check6">
+                                    <label class="form-check-label" for="defaultCheck1">PM Inquiry / Question</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="layout-ux">
+                            <button class="accordion" id="accordion-five">Layout/UX</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check7">
+                                    <label class="form-check-label" for="defaultCheck1">Need higher quality images</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check8">
+                                    <label class="form-check-label" for="defaultCheck1">Phone number issue</label>
+                                </div>
+                                <div class="form-check row">
+                                    <input class="form-check-input col-xs-1" type="checkbox" value="" id="check9">
+                                    <label class="form-check-label col-xs-11" for="defaultCheck1">Client Corp site needs link to G5 site</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="missing-content">
+                            <button class="accordion" id="accordion-five">Missing Content</button>
+                            <div class="panel">
+                                <div class="form-check row">
+                                    <input class="form-check-input col-xs-1" type="checkbox" value="" id="check10">
+                                    <label class="form-check-label col-xs-11" for="defaultCheck1">Missing pricing and sq footage on floor plans</label>
+                                </div>
+                                <div class="form-check row">
+                                    <input class="form-check-input col-xs-1" type="checkbox" value="" id="check11">
+                                    <label class="form-check-label col-xs-11" for="defaultCheck1">Floor Plans images do not match vendor names in integrations dash</label>
+                                </div>
+                                <div class="form-check row">
+                                    <input class="form-check-input col-xs-1" type="checkbox" value="" id="check12">
+                                    <label class="form-check-label col-xs-11" for="defaultCheck1">Integrations vendor needs to grant G5 access to floor plans</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check13">
+                                    <label class="form-check-label" for="defaultCheck1">SSL certificate not attached</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check14">
+                                    <label class="form-check-label" for="defaultCheck1">Missing Assets</label>
+                                </div>
+                                <div class="form-check row">
+                                    <input class="form-check-input col-xs-1" type="checkbox" value="" id="check15">
+                                    <label class="form-check-label col-xs-11" for="defaultCheck1">Info on social media page is inaccurate</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -433,17 +586,41 @@
                         <input type="text" class="search form-control" placeholder="Search issues">
                     </div>
                     <div class="creative-items">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkone">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 1</label>
+                        <div id="best-practices">
+                            <button class="accordion" id="accordion-one">Best Practices</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                                    <label class="form-check-label" for="defaultCheck1">Review Complete</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 2</label>
+                        <div id="inquiry">
+                            <button class="accordion" id="accordion-five">Inquiry</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check2">
+                                    <label class="form-check-label" for="defaultCheck1">Creative Inquiry / Question</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 3</label>
+                        <div id="copy">
+                            <button class="accordion" id="accordion-five">Copy</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check3">
+                                    <label class="form-check-label" for="defaultCheck1">Copy Inquiry / Question</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="design">
+                            <button class="accordion" id="accordion-five">Design</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check4">
+                                    <label class="form-check-label" for="defaultCheck1">Design Inquiry / Question</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -457,28 +634,20 @@
                         <input type="text" class="search form-control" placeholder="Search issues">
                     </div>
                     <div class="am-items">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkone">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 1</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checktwo">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 2</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkthree">
-                            <label class="form-check-label" for="defaultCheck1">Issue # 3</label>
+                        <div id="inquiry">
+                            <button class="accordion" id="accordion-five">Inquiry</button>
+                            <div class="panel">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="check1">
+                                    <label class="form-check-label" for="defaultCheck1">AM Inquiry / Question</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        
-        
         <div id="sidebar-status"></div>
-
-
     </div>
     <div id="sidebar-status"></div>
     <!-- Footer -->
@@ -489,4 +658,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
 </body>
+
 </html>
