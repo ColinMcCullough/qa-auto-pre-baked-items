@@ -31,8 +31,10 @@ function QAHelper() {
   
   this.setDataVal = function(insertRow) {
     this.sheet.getRange(insertRow,1,1,this.lastCol).setBackground('white').setDataValidation(null).setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP)
+    this.sheet.getRange(insertRow,4,1,1).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP)
+    this.sheet.getRange(insertRow,12,1,1).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP)
     var buildPhaseDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Corporate','Initial Build (Phase1)','Remaining Build (Phase2+)','Add Location'], true).build();
-    var reviewStageDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Self QA','PM Review','Peer Review','SEO Staging Review','Staging QC','Live SEO Review','Live QC','Regression QC','Pre Live QC'], true).build();
+    var reviewStageDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Self QA','PM Staging Review','PM Live Review','Peer Review','SEO Staging Review','Staging QC','Live SEO Review','Live QC','Regression QC','Pre Live QC'], true).build();
     var statusDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['0-Test Post Live','1-Open','2-Accepted','3-Fixed','4-Contractor Validated','5-PM Validated','6-QA/QC Validated','7-SEO Validated','8-Duplicate Item','9-Ticket Open'], true).build();
     var passFailDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Pass','Fail'], true).build();
     var typeDataVal = SpreadsheetApp.newDataValidation().requireValueInList(['Copy','Design','Integrations','Redirects','Missing Content','Internal Link','ALT Text','CTN/Leads','Layout/UX','Inquiry','CLS','SEO Strategy','Best Practices','SEO Elements','Ticketed Item','Header Tags'], true).build();

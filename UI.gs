@@ -22,8 +22,9 @@ function onEdit(e) {
   var ss = SpreadsheetApp.getActiveSheet()
   var sheetName = ss.getSheetName()
   var activeCol = ss.getActiveCell().getColumn();
-  Logger.log(activeCol)
-  if(activeCol == 5 && sheetName === "QA Tab" || sheetName === "Enhancement - QA") {
+  var activeRow = ss.getActiveCell().getRow();
+  Logger.log(activeRow)
+  if(activeCol == 5 && activeRow > 2 && sheetName === "QA Tab" || sheetName === "Enhancement - QA") {
     var qaUpdater = new UpdateQATab();
     if(qaUpdater.needsUpdating) {
       qaUpdater.updateOnEdit()

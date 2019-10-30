@@ -62,7 +62,7 @@ function UpdateQATab() {
     this.fillHistory();
     this.fillFoundBy();
     this.fillFoundDate();
-    this.activeRowRange.setValues(this.activeRowVal)
+    this.activeRowRange.setValues(this.activeRowVal).setFontSize(10);
   }
 } 
 

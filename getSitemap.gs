@@ -5,7 +5,10 @@ function testOnlyUnique() {
   Logger.log(unique)
 }
 
-
+function testGetHtmnlStr() {
+  var x = getHtmlString('test.com')
+  Logger.log(x)
+}
 
 function testgetSitemap() {
   Logger.log(getSitemapData('https://www.legacyarc.com/g5-clw-1znpc9fu-larc-at-kent-sitemap.xml'))
@@ -26,7 +29,8 @@ function getHtmlString(url) {
   try {
     var response = UrlFetchApp.fetch(url);
     if (response.getResponseCode() == 200) {
-      responseStr = response.getContentText();
+      var htmlAsString = response.getContentText()
+      responseStr = htmlAsString.indexOf('G5_CLIENT_ID') != -1 ? htmlAsString : '';
     }
     return responseStr;
   }
@@ -37,7 +41,7 @@ function getHtmlString(url) {
 
 //Ui alert
 function errorAlert() {
-  SpreadsheetApp.getUi().alert('Please check the url entered is valid, must include http/https protocol')
+  SpreadsheetApp.getUi().alert('Please check the url entered is a valid g5 website, must include http/https protocol')
 }
 
 /*
@@ -129,11 +133,9 @@ function PagesGenerator(urlObj) {
     this.crawlInternalPages = function(pages) {
       var allURLs = [];
       for(var i = 0; i < pages.length; i++) { //crawls all pages linked from home page
-        allURLs.push(this.crawlHomePageForLinks(pages[i]));
+        allURLs.push.apply(allURLs,this.crawlHomePageForLinks(pages[i]));
       }
-      var flatUrls = [].concat.apply([], allURLs); //flattens array
-      //return this.removeDuplInArr(flatUrls);
-      return flatUrls.filter(this.removeDuplicates)
+      return allURLs.filter(this.removeDuplicates)
     }
    
     /*
@@ -145,13 +147,16 @@ function PagesGenerator(urlObj) {
       var links = [];
       try {
         var html = UrlFetchApp.fetch(url).getContentText();
+        Logger.log(html)
         var inner_links_arr= [this.path];
         var internalLinkStructure = null
-        var linkRegExp = /href="(.*?)"/gi; // regex expression object
+        //var linkRegExp = /href="(.*?)"/gi; // regex expression object
+        var linkRegExp = /href="((?![^" ]*(?:\.jpg|\.png|\.gif|\/\/|tel:|https?|\.css|aspx|\.js|#|\.html|\.pdf))[^" ]+)"/gi; // regex expression object
         var execute = linkRegExp.exec(html);
         while (execute != null) { // we filter only inner links and not pdf docs
           var link = execute[1]
-          if(this.validInternalLink(link)) {
+          var test = inner_links_arr.indexOf(link)
+          if(inner_links_arr.indexOf(link) === -1 && this.validInternalLink(link)) {
             if(this.corp === false) {
               inner_links_arr.push(link);
             }
@@ -178,12 +183,12 @@ function PagesGenerator(urlObj) {
     this.validInternalLink = function(link) {
       return this.domainStrat === 'single' 
                && link.indexOf(this.path) !== -1 
-               && link.match(/\.js|\/\/|\.css|\.pdf|\.html|tel:|\.png|aspx|#|https?/gi) === null 
-               && link.indexOf('.js') === -1 
-               && link.indexOf('.css')  === -1 
+               //&& link.match(/\.js|\/\/|\.css|\.pdf|\.html|tel:|\.png|aspx|#|https?/gi) === null 
+               //&& link.indexOf('.js') === -1 
+               //&& link.indexOf('.css')  === -1 
                && link.indexOf('.com' + this.domain)  === -1
                || this.domainStrat === 'multi' 
-               && link.match(/\.js|\/\/|\.css|\.pdf|\.html|tel:|\.png|aspx|#|https?/gi) === null 
+               //&& link.match(/\.js|\/\/|\.css|\.pdf|\.html|tel:|\.png|aspx|#|https?/gi) === null 
                && link.indexOf('.com' + this.domain)  === -1 
                && link[0] === '/'
                && link.indexOf(this.linkpath) !== -1

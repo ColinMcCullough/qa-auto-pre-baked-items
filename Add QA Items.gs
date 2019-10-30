@@ -12,6 +12,7 @@ function testaddqa() {
   @return null is fails, {String} - 'Success' is successfully added issues
 */
 function addQAItems(tabInfo) {
+  Logger.log(tabInfo)
   var inserQAItems = new InsertQATasks(tabInfo);
   var response = inserQAItems.run()
   return response;
