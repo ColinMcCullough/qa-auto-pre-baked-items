@@ -62,6 +62,7 @@ function NewLocation(name, url) {
     This function generates a new locations and sets its values starting at row 3 of the spreadsheet
   */
   this.createStandardLoc = function () {
+    this.setProtections();
     this.sheet.insertRowBefore(this.insertRow);
     this.setDataVal(this.insertRow);
     this.sheet.insertRowsAfter(this.insertRow, this.numPreBakedRows);
@@ -71,6 +72,13 @@ function NewLocation(name, url) {
     } else {
       this.setEnhData();
     }
+  }
+  
+  //protects the nav from being edited
+  this.setProtections = function() {
+    var protection = this.headerrange.protect().setDescription('QA Tab Headers(Dont Edit)'); // creates protected range
+    var authEditors = ["colin.mccullough@getg5.com", "pat.kane@getg5.com","april.wolber@getg5.com","doc.williams@getg5.com"]; //adds authorized users to range
+    protection.addEditors(authEditors); //adds authorized users to protected range
   }
   
   //Sets header formatting for a new location

@@ -13,11 +13,12 @@ function QAHelper() {
   this.sheetName = this.sheet.getSheetName();
   this.correctSheet = this.sheetName === "Enhancement - QA" || this.sheetName === "QA Tab" ? true : false;
   this.ui = SpreadsheetApp.getUi();
+  this.headerrange = this.sheet.getRange(2, 1, 1, this.lastCol)
   this.headers = ['Test Date', 'Build Phase', 'Review Stage Found', 'Page (URL)', 'Pass | Fail', 'Type', 'Resp. For Fix', 'Fixed By', 'Item Description', 
                   'Jing\n(Optional)', 'Found by', 'Additional Notes or Link to Ticket', 'Location ID', 'History']
   
   this.correctHeaders = function() {
-    var sheetHeaders = this.correctSheet ? this.sheet.getRange(2, 1, 1, this.lastCol).getValues() : false;
+    var sheetHeaders = this.correctSheet ? this.headerrange.getValues() : false;
     if(sheetHeaders) {
       sheetHeaders = [].concat.apply([], sheetHeaders).filter(function(item) {
         return item.indexOf('Status') === -1
