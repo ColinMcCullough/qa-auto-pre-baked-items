@@ -6,6 +6,24 @@ function onOpen(e) {
       .createAddonMenu()
       .addItem('Open App', 'qaSidebar')
       .addToUi();
+  protectQaHeaders();
+}
+
+//protects headers from being edited on QA tabs
+function protectQaHeaders() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheetsCount = ss.getNumSheets();
+  var sheets = ss.getSheets();
+  //loops through sheets
+  for (var i = 0; i < sheetsCount; i++){ 
+    var sheetName = sheets[i].getName(); 
+    if(sheetName === 'QA Tab' || sheetName === 'Enhancement - QA') {
+      var headerrange = sheets[i].getRange(2, 1, 1, 15);
+      var protection = headerrange.protect().setDescription('QA Tab Headers(Dont Edit)'); // creates protected range
+      var authEditors = ["colin.mccullough@getg5.com", "pat.kane@getg5.com","april.wolber@getg5.com","doc.williams@getg5.com"]; //adds authorized users to range
+      protection.addEditors(authEditors); //adds authorized users to protected range
+    }
+  }
 }
 
 //creates sidebar from html file Sidebar.html
